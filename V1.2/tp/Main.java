@@ -20,8 +20,6 @@ public class Main{
         Pronosticos [] pro = new Pronosticos[numPronosticos];
         Participantes [] par = new Participantes[15];
 
-
-        
         String equipo1 = "";
         String equipo2 = "";
         String resultado = "";
