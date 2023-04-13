@@ -38,16 +38,6 @@ public class Partido {
 	public void setGolesEquipo2(int golesEquipo2) {
 		this.golesEquipo2 = golesEquipo2;
 	}
-	public String getResultado() {
-		String aux = ""+golesEquipo1+"-"+golesEquipo2;
-		return aux;
-	}
-	@Override
-	public String toString() {
-		return "Partido [equipo1=" + equipo1 + ", equipo2=" + equipo2 + ", resultado: " + golesEquipo1
-				+ "-" + golesEquipo2 + "]";
-	}
-	
 	
 	
 }

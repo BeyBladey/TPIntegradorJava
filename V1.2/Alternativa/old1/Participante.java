@@ -13,9 +13,7 @@ public class Participante {
 		this.apuestas = new ArrayList<String>();
 		this.puntaje=0;
 	}
-	public int getCantApuestas() {
-		return apuestas.size();
-	}
+	
 	public void agregarApuesta(String a) {
 		this.apuestas.add(a);
 	}
@@ -28,8 +26,8 @@ public class Participante {
 	public int getPuntaje() {
 		return this.puntaje;
 	}
-	public String getApuesta(int a) {
-		return this.apuestas.get(a);
+	public Iterator<String> getIterator() {
+		return apuestas.iterator();
 	}
 
 	public String toString() {

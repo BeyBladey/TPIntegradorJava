@@ -15,18 +15,19 @@ public class PronosticosDeportivos {
 	
 	public PronosticosDeportivos(String ruta) {
 		this.participantes = new ArrayList <Participante>();
+		this.partidos = new ArrayList <Partido>();
 		try {
-			String [] aux = null;
 			File file = new File(ruta);
 			Scanner scanner = new Scanner(file);
+			ArrayList <String> aux = new ArrayList<String>();
 			while (scanner.hasNextLine()) {
 			    String linea = scanner.nextLine();
-			    aux = linea.split(System.lineSeparator());
+			    aux.add(linea);
 			}
-			for(int i=0;i<aux.length;i+=4) {
-				partidos.add(new Partido(aux[i],aux[i+1],Integer.parseInt(aux[i+2]),Integer.parseInt(aux[i+3])));
-				if(i>=aux.length)
-					break;//QuickFix para evitar un IndexOutOfBounds
+			for(int i=0;i<aux.size();i+=4) {
+				partidos.add(new Partido(aux.get(i),aux.get(i+1),Integer.parseInt(aux.get(i+2)),Integer.parseInt(aux.get(i+3))));
+//				if(i>=aux.length) //Creo que no hace falta, pero por las dudas
+//					break;//QuickFix para evitar un IndexOutOfBounds
 			}
             scanner.close();
 		} catch (FileNotFoundException e) {
@@ -34,15 +35,39 @@ public class PronosticosDeportivos {
 		}
 	}
 	
-	public void agregarParticipante(Participante par, String[]apuestas) {
-		for(String s : apuestas) {
-			par.agregarApuesta(s);
+	public void agregarParticipante(String nombre, String ruta) {
+		Participante par = new Participante(nombre);
+		try {
+			File file = new File(ruta);
+			Scanner scanner = new Scanner(file);
+			ArrayList<String> aux = new ArrayList<String>();
+			while(scanner.hasNextLine()) {
+				String linea = scanner.nextLine();
+				aux.add(linea);
+			}
+			for (String s : aux) {
+				par.agregarApuesta(s);
+			}
+			scanner.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("No se encontró el archivo.");
 		}
 		this.participantes.add(par);
 	}
 	
 	public void cerrar() {
-		//Rehacer
+		int i=0;
+		for(Partido p : partidos) {
+			System.out.println(p.toString());
+			for (Participante man : participantes) {
+				
+				if(i<man.getCantApuestas() && man.getApuesta(i).equals(p.getResultado())) {
+					man.agregarPunto();
+					System.out.println(man.getNombre()+" +1");
+				}
+			}
+			i++;
+		}
 	}
 	
 }
